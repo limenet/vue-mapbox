@@ -156,8 +156,8 @@ export default {
     },
 
     $_bindLayerEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });

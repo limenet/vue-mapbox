@@ -8,8 +8,8 @@ export default {
      * so we treat them as 'self' events of these objects
      */
     $_bindSelfEvents(events, emitter) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }
       });

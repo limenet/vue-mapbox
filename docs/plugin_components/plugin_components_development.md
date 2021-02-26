@@ -216,9 +216,9 @@ export default {
     $_bindSelfEvents(events) {
       // $_bindSelfEvents is provided by `asControl` mixin. but we need to replace it because MapboxGeocoder do not follow Mapbox Gl JS events schema and we need custom processing for them
       const vm = this;
-      // Here we use this.$listeners to subscribe only on events that user listens on component
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      // Here we use this.$attrs to subscribe only on events that user listens on component
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           this.control.on(eventName, vm.$_emitControlEvent.bind(vm, eventName));
         }
       });

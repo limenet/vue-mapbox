@@ -44,7 +44,7 @@ export default {
       ];
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (this.$listeners[`update:${prop}`]) {
+          if (this.$attrs[`onUpdate:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -71,8 +71,8 @@ export default {
     },
 
     $_bindMapEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
       });
