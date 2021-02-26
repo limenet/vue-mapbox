@@ -1,4 +1,5 @@
 import promisify from "map-promisified";
+import { h } from "vue";
 
 var withEventsMixin = {
   methods: {
@@ -307,7 +308,7 @@ const watchers = {
 
 function watcher(prop, callback, next, prev) {
   if (this.initial) return;
-  if (this.$listeners[`update:${prop}`]) {
+  if (this.$attrs[`onUpdate:${prop}`]) {
     if (this.propsIsUpdating[prop]) {
       this._watcher.active = false;
       this.$nextTick(() => {
@@ -383,7 +384,7 @@ var withPrivateMethods = {
       ];
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (this.$listeners[`update:${prop}`]) {
+          if (this.$attrs[`onUpdate:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -410,8 +411,8 @@ var withPrivateMethods = {
     },
 
     $_bindMapEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }
       });
@@ -484,7 +485,8 @@ var GlMap = {
   data() {
     return {
       initial: true,
-      initialized: false
+      initialized: false,
+      $_containerVNode: null
     };
   },
 
@@ -545,14 +547,15 @@ var GlMap = {
       this.$emit("load", { map, component: this });
     });
   },
+  emits: ["load"],
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.$nextTick(() => {
       if (this.map) this.map.remove();
     });
   },
 
-  render(h) {
+  render() {
     if (!this.$$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,
@@ -576,8 +579,8 @@ var withSelfEventsMixin = {
      * so we treat them as 'self' events of these objects
      */
     $_bindSelfEvents(events, emitter) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           emitter.on(eventName, this.$_emitSelfEvent);
         }
       });
@@ -605,7 +608,7 @@ var controlMixin = {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.map && this.control) {
       this.map.removeControl(this.control);
     }
@@ -845,7 +848,7 @@ var Marker = {
     }
     this.marker = new this.mapbox.Marker(markerOptions);
 
-    if (this.$listeners["update:coordinates"]) {
+    if (this.$atts["onUpdate:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {
@@ -864,7 +867,7 @@ var Marker = {
     this.$_addMarker();
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.map !== undefined && this.marker !== undefined) {
       this.marker.remove();
     }
@@ -882,8 +885,11 @@ var Marker = {
     },
 
     $_bindMarkerDOMEvents() {
-      Object.keys(this.$listeners).forEach(key => {
-        if (Object.values(markerDOMEvents).includes(key)) {
+      Object.keys(this.$attrs).forEach(key => {
+        if (
+          key.startsWith("on") &&
+          Object.values(markerDOMEvents).includes(key)
+        ) {
           this.marker._element.addEventListener(key, event => {
             this.$_emitSelfEvent(event);
           });
@@ -901,7 +907,7 @@ var Marker = {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {
@@ -1060,7 +1066,7 @@ var Popup = {
     this.initial = false;
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.map) {
       this.popup.remove();
       this.$_emitEvent("removed");
@@ -1113,7 +1119,7 @@ var Popup = {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {
@@ -1270,7 +1276,7 @@ var layerMixin = {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.map && this.map.loaded()) {
       try {
         this.map.removeLayer(this.layerId);
@@ -1299,8 +1305,8 @@ var layerMixin = {
     },
 
     $_bindLayerEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
-        if (events.includes(eventName)) {
+      Object.keys(this.$attrs).forEach(eventName => {
+        if (eventName.startsWith("on") && events.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
       });
