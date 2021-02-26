@@ -5,6 +5,7 @@ import options from "./options";
 import withWatchers from "./mixins/withWatchers";
 import withPrivateMethods from "./mixins/withPrivateMethods";
 import withAsyncActions from "./mixins/withAsyncActions";
+import { h } from "vue";
 
 export default {
   name: "GlMap",
@@ -37,7 +38,8 @@ export default {
   data() {
     return {
       initial: true,
-      initialized: false
+      initialized: false,
+      _containerVNode: null
     };
   },
 
@@ -105,7 +107,7 @@ export default {
     });
   },
 
-  render(h) {
+  render() {
     if (!this.$$_containerVNode) {
       this.$_containerVNode = h("div", {
         id: this.container,
