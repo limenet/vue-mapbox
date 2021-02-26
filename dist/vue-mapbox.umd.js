@@ -1272,7 +1272,7 @@
       });
     },
     render: function render() {
-      if (!this.$$_containerVNode) {
+      if (!this.$_containerVNode) {
         this.$_containerVNode = vue.h("div", {
           id: this.container,
           ref: "container"
