@@ -100,6 +100,7 @@ export default {
       this.$emit("load", { map, component: this });
     });
   },
+  emits: ["load"],
 
   beforeUnmount() {
     this.$nextTick(() => {
