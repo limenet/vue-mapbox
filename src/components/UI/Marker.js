@@ -97,7 +97,7 @@ export default {
     this.$_addMarker();
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.map !== undefined && this.marker !== undefined) {
       this.marker.remove();
     }

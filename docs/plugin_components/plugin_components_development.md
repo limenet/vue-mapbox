@@ -95,24 +95,24 @@ const { withEvents, withSelfEvents, asControl, asLayer } = $helpers;
 
 ### `withEvents`
 
-[Source](https://github.com/soal/vue-mapbox/blob/master/src/lib/withEvents.js).  
+[Source](https://github.com/soal/vue-mapbox/blob/master/src/lib/withEvents.js).
 Provides `$_emitEvent` and `$_emitMapEvent` methods to emit events in VueMapbox style.
 
 ### `withSelfEvents`
 
-[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/UI/withSelfEvents.js)  
+[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/UI/withSelfEvents.js)
 Provides `$_bindSelfEvents`, `$_unbindSelfEvents` and `$_emitSelfEvent`.
 They can be used to bind events to Mapbox GL JS objects that emit self events instead of `Map` object like controls, markers and popups.
 
 ### `asControl`
 
-[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/UI/controls/controlMixin.js).  
+[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/UI/controls/controlMixin.js).
 Provides backbone for Map controls (like )
 
 ### `asLayer`
 
-[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/layer/layerMixin.js).  
-Provides backbone for Map layer.  
+[Source](https://github.com/soal/vue-mapbox/blob/master/src/components/layer/layerMixin.js).
+Provides backbone for Map layer.
 See also [layers API doc](/api/layers)
 
 ## Creating component for Mapbox GL JS plugin
@@ -194,9 +194,9 @@ export default {
     this.$_deferredMount();
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.control.off("results", this.$_updateInput);
-    // Also, control will be removed from map in beforeDestroy() lifecycle hook in `asControl` mixin
+    // Also, control will be removed from map in beforeUnmount() lifecycle hook in `asControl` mixin
   },
 
   methods: {
