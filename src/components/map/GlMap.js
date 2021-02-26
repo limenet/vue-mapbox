@@ -39,7 +39,7 @@ export default {
     return {
       initial: true,
       initialized: false,
-      _containerVNode: null
+      $_containerVNode: null
     };
   },
 
