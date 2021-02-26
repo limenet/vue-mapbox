@@ -1,5 +1,6 @@
 import withEvents from "../../lib/withEvents";
 import withSelfEvents from "./withSelfEvents";
+import { h } from "vue";
 
 const popupEvents = {
   open: "open",
@@ -200,7 +201,7 @@ export default {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {

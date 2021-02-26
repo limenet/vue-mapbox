@@ -1,5 +1,6 @@
 import withEvents from "../../lib/withEvents";
 import withSelfEvents from "./withSelfEvents";
+import { h } from "vue";
 
 const markerEvents = {
   drag: "drag",
@@ -137,7 +138,7 @@ export default {
     }
   },
 
-  render(h) {
+  render() {
     return h(
       "div",
       {
