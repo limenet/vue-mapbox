@@ -36,8 +36,8 @@
     "map-promisified": "https://github.com/soal/map-promisified"
   },
   "peerDependencies": {
-    "mapbox-gl": "^2.0",
-    "vue": "^2.6.7"
+    "mapbox-gl": "^2.0.0",
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.13.7",
