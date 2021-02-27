@@ -79,7 +79,7 @@ export default {
     }
     this.marker = new this.mapbox.Marker(markerOptions);
 
-    if (this.$atts["onUpdate:coordinates"]) {
+    if (this.$attrs["onUpdate:coordinates"]) {
       this.marker.on("dragend", event => {
         let newCoordinates;
         if (this.coordinates instanceof Array) {

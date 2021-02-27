@@ -1,4 +1,11 @@
 export default {
+  emits: [
+    "update:center",
+    "update:zoom",
+    "update:bearing",
+    "update:pitch",
+    "update:bounds"
+  ],
   methods: {
     $_updateSyncedPropsFabric(prop, data) {
       return () => {
