@@ -9,8 +9,11 @@ export default {
      */
     $_bindSelfEvents(events, emitter) {
       Object.keys(this.$attrs).forEach(eventName => {
-        if (eventName.startsWith("on") && events.includes(eventName)) {
-          emitter.on(eventName, this.$_emitSelfEvent);
+        if (
+          eventName.startsWith("on") &&
+          Object.keys(events).includes(eventName)
+        ) {
+          emitter.on(events[eventName], this.$_emitSelfEvent);
         }
       });
     },

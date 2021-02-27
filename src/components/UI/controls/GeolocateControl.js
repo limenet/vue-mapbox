@@ -3,10 +3,10 @@ import withEvents from "../../../lib/withEvents";
 import withSelfEvents from "../withSelfEvents";
 
 const geolocationEvents = {
-  trackuserlocationstart: "trackuserlocationstart",
-  trackuserlocationend: "trackuserlocationend",
-  geolocate: "geolocate",
-  error: "error"
+  onTrackuserlocationstart: "trackuserlocationstart",
+  onTrackuserlocationend: "trackuserlocationend",
+  onGeolocate: "geolocate",
+  onError: "error"
 };
 
 export default {
@@ -40,7 +40,7 @@ export default {
   created() {
     this.control = this.mapbox().GeolocateControl;
     this.$_addControl();
-    this.$_bindSelfEvents(Object.keys(geolocationEvents), this.controlInstance);
+    this.$_bindSelfEvents(geolocationEvents, this.controlInstance);
   },
 
   methods: {

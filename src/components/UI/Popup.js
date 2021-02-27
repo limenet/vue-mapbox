@@ -3,8 +3,8 @@ import withSelfEvents from "./withSelfEvents";
 import { h } from "vue";
 
 const popupEvents = {
-  open: "open",
-  close: "close"
+  onOpen: "open",
+  onClose: "close"
 };
 
 /**
@@ -176,7 +176,7 @@ export default {
         }
       }
 
-      this.$_bindSelfEvents(Object.keys(popupEvents), this.popup);
+      this.$_bindSelfEvents(popupEvents, this.popup);
 
       this.$_emitEvent("added", { popup: this.popup });
 

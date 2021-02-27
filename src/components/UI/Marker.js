@@ -3,9 +3,9 @@ import withSelfEvents from "./withSelfEvents";
 import { h } from "vue";
 
 const markerEvents = {
-  drag: "drag",
-  dragstart: "dragstart",
-  dragend: "dragend"
+  onDrag: "drag",
+  onDagstart: "dragstart",
+  onDragend: "dragend"
 };
 
 const markerDOMEvents = {
@@ -94,8 +94,7 @@ export default {
       });
     }
 
-    const eventNames = Object.keys(markerEvents);
-    this.$_bindSelfEvents(eventNames, this.marker);
+    this.$_bindSelfEvents(markerEvents, this.marker);
 
     this.initial = false;
     this.$_addMarker();
