@@ -22,7 +22,7 @@
     "docs:build": "vuepress build docs",
     "serve:sample": "vue-cli-service serve sample/main.js",
     "build:sample": "vue-cli-service build sample/main.js",
-    "lint:sample": "vue-cli-service lint"
+    "lint:sample": "vue-cli-service lint sample/main.js"
   },
   "husky": {
     "hooks": {
