@@ -42,13 +42,13 @@ export default {
         ...this.source
       };
 
-      this.map.on("dataloading", this.$_watchSourceLoading);
+      this.map().on("dataloading", this.$_watchSourceLoading);
       try {
-        this.map.addSource(this.sourceId, source);
+        this.map().addSource(this.sourceId, source);
       } catch (err) {
         if (this.replaceSource) {
-          this.map.removeSource(this.sourceId);
-          this.map.addSource(this.sourceId, source);
+          this.map().removeSource(this.sourceId);
+          this.map().addSource(this.sourceId, source);
         }
       }
       this.$_addLayer();
@@ -57,10 +57,10 @@ export default {
     },
 
     $_addLayer() {
-      let existed = this.map.getLayer(this.layerId);
+      let existed = this.map().getLayer(this.layerId);
       if (existed) {
         if (this.replace) {
-          this.map.removeLayer(this.layerId);
+          this.map().removeLayer(this.layerId);
         } else {
           this.$_emitEvent("layer-exists", { layerId: this.layerId });
           return existed;
@@ -72,11 +72,12 @@ export default {
         type: "raster",
         ...this.layer
       };
-      this.map.addLayer(layer, this.before);
+      this.map().addLayer(layer, this.before);
       this.$_emitEvent("added", {
         layerId: this.layerId,
         canvas: this.canvasElement
       });
     }
-  }
+  },
+  emits: ["layer-exists", "added"]
 };

@@ -12,17 +12,19 @@ export default {
       default: "top-right"
     }
   },
+  emits: ["added", "error"],
 
   beforeUnmount() {
-    if (this.map && this.control) {
-      this.map.removeControl(this.control);
+    if (this.map() && this.controlInstance) {
+      this.map().removeControl(this.controlInstance);
     }
   },
 
   methods: {
     $_addControl() {
       try {
-        this.map.addControl(this.control, this.position);
+        this.controlInstance = new this.control(this.$props);
+        this.map().addControl(this.controlInstance, this.position);
       } catch (err) {
         this.$_emitEvent("error", { error: err });
         return;

@@ -9,7 +9,7 @@ export default {
     getSourceFeatures() {
       return filter => {
         if (this.map) {
-          return this.map.querySourceFeatures(this.sourceId, {
+          return this.map().querySourceFeatures(this.sourceId, {
             sourceLayer: this.layer["source-layer"],
             filter
           });
@@ -21,7 +21,7 @@ export default {
     getRenderedFeatures() {
       return (geometry, filter) => {
         if (this.map) {
-          return this.map.queryRenderedFeatures(geometry, {
+          return this.map().queryRenderedFeatures(geometry, {
             layers: [this.layerId],
             filter
           });
@@ -34,7 +34,7 @@ export default {
   watch: {
     filter(filter) {
       if (this.initial) return;
-      this.map.setFilter(this.layerId, filter);
+      this.map().setFilter(this.layerId, filter);
     }
   },
 
@@ -49,26 +49,26 @@ export default {
         ...this.source
       };
 
-      this.map.on("dataloading", this.$_watchSourceLoading);
+      this.map().on("dataloading", this.$_watchSourceLoading);
       try {
-        this.map.addSource(this.sourceId, source);
+        this.map().addSource(this.sourceId, source);
       } catch (err) {
         if (this.replaceSource) {
-          this.map.removeSource(this.sourceId);
-          this.map.addSource(this.sourceId, source);
+          this.map().removeSource(this.sourceId);
+          this.map().addSource(this.sourceId, source);
         }
       }
       this.$_addLayer();
       this.$_bindLayerEvents(layerEvents);
-      this.map.off("dataloading", this.$_watchSourceLoading);
+      this.map().off("dataloading", this.$_watchSourceLoading);
       this.initial = false;
     },
 
     $_addLayer() {
-      let existed = this.map.getLayer(this.layerId);
+      let existed = this.map().getLayer(this.layerId);
       if (existed) {
         if (this.replace) {
-          this.map.removeLayer(this.layerId);
+          this.map().removeLayer(this.layerId);
         } else {
           this.$_emitEvent("layer-exists", { layerId: this.layerId });
           return existed;
@@ -80,7 +80,7 @@ export default {
         ...this.layer
       };
 
-      this.map.addLayer(layer, this.before);
+      this.map().addLayer(layer, this.before);
       this.$_emitEvent("added", { layerId: this.layerId });
     },
 
@@ -91,7 +91,7 @@ export default {
           source: this.sourceId,
           "source-layer": this.layer["source-layer"]
         };
-        return this.map.setFeatureState(params, state);
+        return this.map().setFeatureState(params, state);
       }
     },
 
@@ -102,8 +102,9 @@ export default {
           source: this.source,
           "source-layer": this.layer["source-layer"]
         };
-        return this.map.getFeatureState(params);
+        return this.map().getFeatureState(params);
       }
     }
-  }
+  },
+  emits: ["layer-exists", "added"]
 };

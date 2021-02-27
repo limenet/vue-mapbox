@@ -140,7 +140,8 @@ export default {
   },
 
   created() {
-    this.popup = new this.mapbox.Popup(this.$props);
+    const popup = this.mapbox().Popup;
+    this.popup = new popup(this.$props);
   },
 
   mounted() {
@@ -157,7 +158,7 @@ export default {
 
   methods: {
     $_addPopup() {
-      this.popup = new this.mapbox.Popup(this.$props);
+      this.popup = new this.mapbox().Popup(this.$props);
       if (this.coordinates !== undefined) {
         this.popup.setLngLat(this.coordinates);
       }
@@ -211,5 +212,6 @@ export default {
       },
       [this.$slots.default]
     );
-  }
+  },
+  emits: ["remove", "removed", "added"]
 };

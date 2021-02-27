@@ -1,41 +1,41 @@
 const watchers = {
   maxBounds(next) {
-    this.map.setMaxBounds(next);
+    this.map().setMaxBounds(next);
   },
   minZoom(next) {
-    this.map.setMinZoom(next);
+    this.map().setMinZoom(next);
   },
   maxZoom(next) {
-    this.map.setMaxZoom(next);
+    this.map().setMaxZoom(next);
   },
   mapStyle(next) {
-    this.map.setStyle(next);
+    this.map().setStyle(next);
   },
   // TODO: make 'bounds' synced prop
-  // bounds (next) { this.map.fitBounds(next, { linear: true, duration: 0 }) },
+  // bounds (next) { this.map().fitBounds(next, { linear: true, duration: 0 }) },
   collisionBoxes(next) {
-    this.map.showCollisionBoxes = next;
+    this.map().showCollisionBoxes = next;
   },
   tileBoundaries(next) {
-    this.map.showTileBoundaries = next;
+    this.map().showTileBoundaries = next;
   },
   repaint(next) {
-    this.map.repaint = next;
+    this.map().repaint = next;
   },
   zoom(next) {
-    this.map.setZoom(next);
+    this.map().setZoom(next);
   },
   center(next) {
-    this.map.setCenter(next);
+    this.map().setCenter(next);
   },
   bearing(next) {
-    this.map.setBearing(next);
+    this.map().setBearing(next);
   },
   pitch(next) {
-    this.map.setPitch(next);
+    this.map().setPitch(next);
   },
   light(next) {
-    this.map.setLigh(next);
+    this.map().setLigh(next);
   }
 };
 

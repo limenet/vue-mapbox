@@ -77,7 +77,10 @@ export default {
     if (this.$slots.marker) {
       markerOptions.element = this.$slots.marker[0].elm;
     }
-    this.marker = new this.mapbox.Marker(markerOptions);
+
+    const marker = this.mapbox().Marker;
+
+    this.marker = new marker(markerOptions);
 
     if (this.$attrs["onUpdate:coordinates"]) {
       this.marker.on("dragend", event => {
@@ -106,7 +109,7 @@ export default {
 
   methods: {
     $_addMarker() {
-      this.marker.setLngLat(this.coordinates).addTo(this.map);
+      this.marker.setLngLat(this.coordinates).addTo(this.map());
       this.$_bindMarkerDOMEvents();
       this.$_emitEvent("added", { marker: this.marker });
     },
@@ -148,5 +151,6 @@ export default {
       },
       [this.$slots.marker, this.marker ? this.$slots.default : null]
     );
-  }
+  },
+  emits: ["removed", "added"]
 };

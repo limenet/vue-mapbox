@@ -7,21 +7,22 @@
     :mapStyle="mapStyle"
     :zoom="zoom"
   >
+    <mgl-scale-control position="bottom-right" />
     <mgl-attribution-control position="top-left" />
+
     <mgl-navigation-control position="top-right" />
-    <mgl-geolocate-control position="top-right" />
     <mgl-fullscreen-control position="top-right" />
     <mgl-geolocate-control position="top-right" />
-    <mgl-scale-control position="bottom-right" />
     <mgl-marker
       v-model:coordinates="markerCoordinates"
       color="green"
     />
     <mgl-geojson-layer
       type="fill"
-      :sourceId="sourceId"
-      :layerId="layerId"
-      :source="geojson"
+      :source="points"
+      :source-id="points.data.id"
+      layer-id="pointsLayer"
+      :layer="pointsLayer"
       @click="handleClick"
     />
   </mgl-map>
@@ -45,7 +46,6 @@ export default {
     MglMap,
     MglMarker,
     MglGeojsonLayer,
-
     MglAttributionControl,
     MglNavigationControl,
     MglGeolocateControl,
@@ -55,23 +55,39 @@ export default {
   data() {
     return {
       mapStyle: "mapbox://styles/mapbox/streets-v11",
-      geojson: {
-        type: "Feature",
-        properties: {
-          name: "Coors Field",
-          amenity: "Baseball Stadium",
-          popupContent: "This is where the Rockies play!"
+      points: {
+        data: {
+          features: [
+            {
+              properties: {},
+              geometry: {
+                coordinates: [
+                  [
+                    [9.19830322265625, 47.35184985856322],
+                    [9.5416259765625, 47.35184985856322],
+                    [9.5416259765625, 47.54965238525127],
+                    [9.19830322265625, 47.54965238525127],
+                    [9.19830322265625, 47.35184985856322]
+                  ]
+                ],
+                type: "Polygon"
+              },
+              type: "Feature"
+            }
+          ],
+          id: "points",
+          type: "FeatureCollection"
         },
-        geometry: {
-          type: "Point",
-          coordinates: [-104.99404, 39.75621]
-        }
+        type: "geojson"
       },
-      layerId: "firstLayer",
-      sourceId: "firstSource",
-      markerCoordinates: [50, 50],
-      center: [47, 9],
-      zoom: 4
+      pointsLayer: {
+        id: "pointsLayer",
+        type: "fill",
+        paint: { "fill-color": "#ff0000", "fill-opacity": 0.1 }
+      },
+      markerCoordinates: [9.3, 47.5],
+      center: [9.3, 47.5],
+      zoom: 8
     };
   },
   computed: {
