@@ -15,10 +15,13 @@ export default {
 
   created() {
     if (this.source && this.source.coordinates) {
-      this.$watch("source.coordinates", function(next) {
-        if (this.initial) return;
-        this.mapSource.setCoordinates(next);
-      });
+      this.$watch(
+        () => this.source.coordinates,
+        function(next) {
+          if (this.initial) return;
+          this.mapSource.setCoordinates(next);
+        }
+      );
     }
     this.$_deferredMount();
   },

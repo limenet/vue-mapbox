@@ -82,17 +82,15 @@ export default {
 
     this.marker = new marker(markerOptions);
 
-    if (this.$attrs["onUpdate:coordinates"]) {
-      this.marker.on("dragend", event => {
-        let newCoordinates;
-        if (this.coordinates instanceof Array) {
-          newCoordinates = [event.target._lngLat.lng, event.target._lngLat.lat];
-        } else {
-          newCoordinates = event.target._lngLat;
-        }
-        this.$emit("update:coordinates", newCoordinates);
-      });
-    }
+    this.marker.on("dragend", event => {
+      let newCoordinates;
+      if (this.coordinates instanceof Array) {
+        newCoordinates = [event.target._lngLat.lng, event.target._lngLat.lat];
+      } else {
+        newCoordinates = event.target._lngLat;
+      }
+      this.$emit("update:coordinates", newCoordinates);
+    });
 
     this.$_bindSelfEvents(markerEvents, this.marker);
 
@@ -151,5 +149,5 @@ export default {
       [this.$slots.marker, this.marker ? this.$slots.default : null]
     );
   },
-  emits: ["removed", "added"]
+  emits: ["removed", "added", "dragend", "update:coordinates"]
 };

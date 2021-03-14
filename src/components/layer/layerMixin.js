@@ -72,22 +72,28 @@ export default {
 
   created() {
     if (this.layer.minzoom) {
-      this.$watch("layer.minzoom", function(next) {
-        if (this.initial) return;
-        this.map().setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
-      });
+      this.$watch(
+        () => this.layer.minzoom,
+        function(next) {
+          if (this.initial) return;
+          this.map().setLayerZoomRange(this.layerId, next, this.layer.maxzoom);
+        }
+      );
     }
 
     if (this.layer.maxzoom) {
-      this.$watch("layer.maxzoom", function(next) {
-        if (this.initial) return;
-        this.map().setLayerZoomRange(this.layerId, this.layer.minzoom, next);
-      });
+      this.$watch(
+        () => this.layer.maxzoom,
+        function(next) {
+          if (this.initial) return;
+          this.map().setLayerZoomRange(this.layerId, this.layer.minzoom, next);
+        }
+      );
     }
 
     if (this.layer.paint) {
       this.$watch(
-        "layer.paint",
+        () => this.layer.paint,
         function(next) {
           if (this.initial) return;
           if (next) {
@@ -102,7 +108,7 @@ export default {
 
     if (this.layer.layout) {
       this.$watch(
-        "layer.layout",
+        () => this.layer.layout,
         function(next) {
           if (this.initial) return;
           if (next) {
@@ -117,7 +123,7 @@ export default {
 
     if (this.layer.filter) {
       this.$watch(
-        "layer.filter",
+        () => this.layer.filter,
         function(next) {
           if (this.initial) return;
           this.map().setFilter(this.layerId, next);

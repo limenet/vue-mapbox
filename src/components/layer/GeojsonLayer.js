@@ -89,7 +89,7 @@ export default {
   created() {
     if (this.source) {
       this.$watch(
-        "source.data",
+        () => this.source.data,
         function(next) {
           if (this.initial) return;
           this.mapSource.setData(next);

@@ -9,7 +9,7 @@ export default {
     if (this.source) {
       if (this.source.coordinates) {
         this.$watch(
-          "source.coordinates",
+          () => this.source.coordinates,
           function(next) {
             if (this.initial) return;
             if (next) {
@@ -22,7 +22,7 @@ export default {
 
       if (this.source.url) {
         this.$watch(
-          "source.url",
+          () => this.source.url,
           function(next) {
             if (this.initial) return;
             if (next) {
