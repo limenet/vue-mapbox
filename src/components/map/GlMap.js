@@ -178,8 +178,53 @@ export default {
 
         return new Promise(resolve => {
           if (this.accessToken) this.mapbox.accessToken = this.accessToken;
+          const options = {
+            accessToken: this.accessToken,
+            minZoom: this.minZoom,
+            maxZoom: this.maxZoom,
+            hash: this.hash,
+            interactive: this.interactive,
+            bearingSnap: this.bearingSnap,
+            pitchWithRotate: this.pitchWithRotate,
+            clickTolerance: this.clickTolerance,
+            classes: this.classes,
+            attributionControl: this.attributionControl,
+            customAttribution: this.customAttribution,
+            logoPosition: this.logoPosition,
+            failIfMajorPerformanceCaveat: this.failIfMajorPerformanceCaveat,
+            preserveDrawingBuffer: this.preserveDrawingBuffer,
+            refreshExpiredTiles: this.refreshExpiredTiles,
+            maxBounds: this.maxBounds,
+            scrollZoom: this.scrollZoom,
+            boxZoom: this.boxZoom,
+            dragRotate: this.dragRotate,
+            dragPan: this.dragPan,
+            keyboard: this.keyboard,
+            doubleClickZoom: this.doubleClickZoom,
+            touchZoomRotate: this.touchZoomRotate,
+            trackResize: this.trackResize,
+            center: this.center,
+            zoom: this.zoom,
+            bearing: this.bearing,
+            pitch: this.pitch,
+            bounds: this.bounds,
+            fitBoundsOptions: this.fitBoundsOptions,
+            renderWorldCopies: this.renderWorldCopies,
+            RTLTextPluginUrl: this.RTLTextPluginUrl,
+            light: this.light,
+            tileBoundaries: this.tileBoundaries,
+            collisionBoxes: this.collisionBoxes,
+            repaint: this.repaint,
+            transformRequest: this.transformRequest,
+            maxTileCacheSize: this.maxTileCacheSize,
+            localIdeographFontFamily: this.localIdeographFontFamily,
+            collectResourceTiming: this.collectResourceTiming,
+            fadeDuration: this.fadeDuration,
+            crossSourceCollisions: this.crossSourceCollisions
+          };
+
           const map = new this.mapbox.Map({
-            ...this,
+            ...options,
             container: this.$refs.container,
             style: this.mapStyle
           });
